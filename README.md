@@ -1,4 +1,4 @@
-# House Price Prediction Web App
+# House Price Prediction Web App by MOHAMED ANSARI
 
 A Machine Learning regression-based web application that predicts house prices
 using area, bedrooms, and age of the house.
@@ -11,7 +11,4 @@ using area, bedrooms, and age of the house.
 - Chart.js
 
 ## How to Run
-1. pip install -r requirements.txt
-2. python model.py
-3. python app.py
-4. Open http://127.0.0.1:5000/
+Open https:  //house-prediction-project.onrender.com
