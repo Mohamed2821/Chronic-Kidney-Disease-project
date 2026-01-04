@@ -11,4 +11,4 @@ using area, bedrooms, and age of the house.
 - Chart.js
 
 ## How to Run
-Open https:  house-prediction-project.onrender.com
+Open    https://house-prediction-project.onrender.com
