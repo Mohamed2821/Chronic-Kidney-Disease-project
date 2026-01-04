@@ -4,17 +4,16 @@ import os
 import pandas as pd
 from sklearn.linear_model import LinearRegression
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='.')
 
 MODEL_FILE = "model.pkl"
 
-# Train model if not exists
 def train_model():
     data = {
         'Area': [800, 900, 1000, 1100, 1200, 1300, 1400],
         'Bedrooms': [1, 2, 2, 3, 3, 3, 4],
         'Age': [20, 15, 10, 8, 5, 3, 1],
-        'Price': [30, 35, 40, 50, 55, 65, 75]  # Price in Lakhs (INR)
+        'Price': [30, 35, 40, 50, 55, 65, 75]
     }
 
     df = pd.DataFrame(data)
@@ -38,41 +37,34 @@ else:
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('templates.html')
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    try:
-        area = float(request.form['area'])
-        bedrooms = int(request.form['bedrooms'])
-        age = int(request.form['age'])
-        currency = request.form['currency']
+    area = float(request.form['area'])
+    bedrooms = int(request.form['bedrooms'])
+    age = int(request.form['age'])
+    currency = request.form['currency']
 
-        prediction = model.predict([[area, bedrooms, age]])[0]
+    prediction = model.predict([[area, bedrooms, age]])[0]
 
-        # Currency conversion
-        if currency == "USD":
-            prediction *= 0.012
-            symbol = "$"
-        elif currency == "EUR":
-            prediction *= 0.011
-            symbol = "€"
-        else:
-            symbol = "₹"
+    if currency == "USD":
+        prediction *= 0.012
+        symbol = "$"
+    elif currency == "EUR":
+        prediction *= 0.011
+        symbol = "€"
+    else:
+        symbol = "₹"
 
-        prediction = round(prediction, 2)
+    prediction = round(prediction, 2)
 
-        return render_template(
-            'index.html',
-            prediction=prediction,
-            symbol=symbol
-        )
-
-    except Exception as e:
-        return render_template(
-            'index.html',
-            error="Invalid input. Please enter valid values."
-        )
+    return render_template(
+        'templates.html',
+        prediction=prediction,
+        symbol=symbol
+    )
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
+
