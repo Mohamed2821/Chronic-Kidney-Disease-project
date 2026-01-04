@@ -8,6 +8,7 @@ app = Flask(__name__, template_folder='.')
 
 MODEL_FILE = "model.pkl"
 
+
 def train_model():
     data = {
         'Area': [800, 900, 1000, 1100, 1200, 1300, 1400],
