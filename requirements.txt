@@ -1,5 +1,4 @@
-flask
+flask==3.0.0
 numpy
-pandas
 scikit-learn
 gunicorn
