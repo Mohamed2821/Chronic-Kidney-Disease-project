@@ -1,70 +1,31 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
+import numpy as np
 import pickle
-import os
-import pandas as pd
-from sklearn.linear_model import LinearRegression
 
-app = Flask(__name__, template_folder='.')
+app = Flask(__name__)
 
-MODEL_FILE = "model.pkl"
+# Load model once
+with open("model.pkl", "rb") as f:
+    model = pickle.load(f)
 
-
-def train_model():
-    data = {
-        'Area': [800, 900, 1000, 1100, 1200, 1300, 1400],
-        'Bedrooms': [1, 2, 2, 3, 3, 3, 4],
-        'Age': [20, 15, 10, 8, 5, 3, 1],
-        'Price': [30, 35, 40, 50, 55, 65, 75]
-    }
-
-    df = pd.DataFrame(data)
-    X = df[['Area', 'Bedrooms', 'Age']]
-    y = df['Price']
-
-    model = LinearRegression()
-    model.fit(X, y)
-
-    with open(MODEL_FILE, 'wb') as f:
-        pickle.dump(model, f)
-
-    return model
-
-# Load or train model
-if os.path.exists(MODEL_FILE):
-    with open(MODEL_FILE, 'rb') as f:
-        model = pickle.load(f)
-else:
-    model = train_model()
-
-@app.route('/')
+@app.route("/")
 def home():
-    return render_template('templates.html')
+    return render_template("index.html")
 
-@app.route('/predict', methods=['POST'])
+@app.route("/predict", methods=["POST"])
 def predict():
-    area = float(request.form['area'])
-    bedrooms = int(request.form['bedrooms'])
-    age = int(request.form['age'])
-    currency = request.form['currency']
+    try:
+        area = float(request.form["area"])
+        bedrooms = int(request.form["bedrooms"])
+        bathrooms = int(request.form["bathrooms"])
 
-    prediction = model.predict([[area, bedrooms, age]])[0]
+        prediction = model.predict([[area, bedrooms, bathrooms]])
+        price = round(prediction[0], 2)
 
-    if currency == "USD":
-        prediction *= 0.012
-        symbol = "$"
-    elif currency == "EUR":
-        prediction *= 0.011
-        symbol = "€"
-    else:
-        symbol = "₹"
+        return jsonify({"price": price})
 
-    prediction = round(prediction, 2)
-
-    return render_template(
-        'templates.html',
-        prediction=prediction,
-        symbol=symbol
-    )
+    except:
+        return jsonify({"error": "Invalid input"})
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.run(debug=True)
