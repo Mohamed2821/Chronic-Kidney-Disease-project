@@ -1,6 +1,0 @@
-flask
-gunicorn
-numpy
-pandas
-joblib
-scikit-learn==1.3.2
