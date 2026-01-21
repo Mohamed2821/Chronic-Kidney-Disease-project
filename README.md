@@ -39,6 +39,13 @@ This project involves building a machine learning model to predict house prices 
 - The trained model is used to make predictions on the test dataset.
 - The predictions are saved to a CSV file (`submission.csv`) for submission.
 
+## Data Table:
+date	price	bedrooms	bathrooms	sqft_living	sqft_lot	floors	waterfront	view	condition	sqft_above	sqft_basement	yr_built	yr_renovated	street	city	statezip	country
+02-05-2014 00:00	313000	3	1.5	1340	7912	1.5	0	0	3	1340	0	1955	2005	18810 Densmore Ave N	Shoreline	WA 98133	USA
+02-05-2014 00:00	2384000	5	2.5	3650	9050	2	0	4	5	3370	280	1921	0	709 W Blaine St	Seattle	WA 98119	USA
+<img width="1153" height="61" alt="image" src="https://github.com/user-attachments/assets/780173ee-ea16-425a-9d8e-bf019e2656db" />
+
+
 
 ## Additional Notes
 - The `submission.csv` file contains the predicted house prices for the test dataset.
