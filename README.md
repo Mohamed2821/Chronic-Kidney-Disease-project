@@ -18,6 +18,7 @@ associated with chronic disease risk.
 
 -   Kidney Disease Dataset (CSV)
 -   Target Variable: CKD (Yes / No)
+-   kaggle data set : https://www.kaggle.com/datasets/mansoordaku/ckdisease/
 
 ## 🛠️ Technologies Used
 
